@@ -18,7 +18,7 @@ set user_id [ad_maybe_redirect_for_registration]
 # Check for admin privileges
 
 set package_id [ad_conn package_id]
-set admin_p [ad_permission_p $package_id admin]
+set admin_p [permission::permission_p -object_id $package_id -privilege admin]
 
 # Get the name of the package
 

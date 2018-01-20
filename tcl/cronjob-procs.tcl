@@ -58,11 +58,11 @@ ad_proc cronjob_run { cronjob_id } {
             incr rownum
         }
     }
+
     append table "</table>"
     if {$rownum == 0} {
         set table "No Rows Returned"
     }
-
 
     # evaluate the run_tcl code
     eval $run_tcl
@@ -71,9 +71,8 @@ ad_proc cronjob_run { cronjob_id } {
         ns_log Debug "sending cronjob email to $email"
         acs_mail_lite::send -to_addr $email -from_addr [ad_host_administrator] \
 	       -subject "Cronjob $cronjob_id" \
-	        -body "Description: <br>$description<br> $table" \
-	         -extraheaders [list [list "Content-Type" "text/html"]]
+	       -body "Description: <br>$description<br> $table" \
+           -send_immediately \
+           -mime_type "text/html"
     }
-    return
-
 }
